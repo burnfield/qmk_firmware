@@ -5,6 +5,7 @@ enum layers {
   _QWE = 0,
   _NAV,
   _SYM,
+  _OSL,
 };
 
 enum custom_keycodes {
@@ -20,6 +21,7 @@ enum custom_keycodes {
   SE_GRV,
   MT_CIRC,
   MT_TILD,
+  MT_TMUX,
 };
 
 #define HM_EXLM LGUI_T(MT_EXLM)
@@ -127,6 +129,27 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       tap_code16(KC_BSPC);
     }
     return false;
+  case MT_TMUX:
+    if (record->event.pressed) {
+      tap_code16(LCTL(SE_Q));
+      set_oneshot_layer(_OSL, ONESHOT_START);
+    }
+    return false;
+  case KC_1:
+  case KC_2:
+  case KC_3:
+  case KC_4:
+  case KC_5:
+  case KC_6:
+  case KC_7:
+  case KC_8:
+  case KC_9:
+  case KC_0:
+    if (record->event.pressed) {
+      tap_code16(keycode);
+      clear_oneshot_layer_state(ONESHOT_PRESSED);
+    }
+    return false;
   }
   if (!process_custom_shift_keys(keycode, record)) {
     return false;
@@ -140,7 +163,7 @@ enum combos {
   XC_CLBR,
   CV_LPRN,
   KL_ENT,
-  IO_CHAT,
+  IO_TMUX,
   PERDAS_ODIA,
   PERDAS_ADIA,
   PERDAS_ARNG,
@@ -173,7 +196,7 @@ combo_t key_combos[COMBO_COUNT] = {
     [CV_LPRN] = COMBO(cv_combo, SE_LCBR),
 
     [KL_ENT] = COMBO(kl_combo, KC_ENT),
-    [IO_CHAT] = COMBO(io_combo, KC_F20),
+    [IO_TMUX] = COMBO(io_combo, MT_TMUX),
 
     [PERDAS_ODIA] = COMBO(perdas_combo, SE_ODIA),
     [PERDAS_ADIA] = COMBO(perdas0_combo, SE_ADIA),
@@ -225,5 +248,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   	LGUI_F5, KC_F6,   KC_F7,   KC_F8,   _______, /**/ KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, KC_LGUI,
   	KC_F1,   LALT_F2, LSFT_F3, LCTL_F4, _______, /**/ CTL_LFT, KC_RCTL, KC_RSFT, CTL_RGT, KC_LALT,
   							   _______, _______, /**/ _______, KC_DEL),
+
+  [_OSL] = LAYOUT(
+    KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    /**/ KC_6,    KC_7,    KC_8,    KC_9,     KC_0,
+  	KC_TRNS, KC_TRNS ,KC_TRNS, KC_TRNS, KC_TRNS, /**/ KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
+  	KC_TRNS, KC_TRNS ,KC_TRNS, KC_TRNS, KC_TRNS, /**/ KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
+  							   KC_TRNS, KC_TRNS, /**/ KC_TRNS, KC_TRNS),
 };
 // clang-format on
