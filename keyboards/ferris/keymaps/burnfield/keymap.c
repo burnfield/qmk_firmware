@@ -6,6 +6,8 @@ enum layers {
   _NAV,
   _SYM,
   _OSL,
+  _I3SW,
+  _I3MV,
 };
 
 enum custom_keycodes {
@@ -164,6 +166,8 @@ enum combos {
   CV_LPRN,
   KL_ENT,
   IO_TMUX,
+  UI_I3SW,
+  YU_I3MV,
   PERDAS_ODIA,
   PERDAS_ADIA,
   PERDAS_ARNG,
@@ -177,6 +181,8 @@ const uint16_t PROGMEM xc_combo[] = {LALT_T(SE_X), LSFT_T(SE_C), COMBO_END};
 const uint16_t PROGMEM cv_combo[] = {LSFT_T(SE_C), LCTL_T(SE_V), COMBO_END};
 
 const uint16_t PROGMEM io_combo[] = {SE_I, SE_O, COMBO_END};
+const uint16_t PROGMEM ui_combo[] = {SE_U, SE_I, COMBO_END};
+const uint16_t PROGMEM yu_combo[] = {SE_Y, SE_U, COMBO_END};
 const uint16_t PROGMEM kl_combo[] = {SE_K, SE_L, COMBO_END};
 
 const uint16_t PROGMEM perdas_combo[] = {SE_SLSH, LALT_T(SE_DOT), COMBO_END};
@@ -197,6 +203,8 @@ combo_t key_combos[COMBO_COUNT] = {
 
     [KL_ENT] = COMBO(kl_combo, KC_ENT),
     [IO_TMUX] = COMBO(io_combo, MT_TMUX),
+    [UI_I3SW] = COMBO(ui_combo, OSL(_I3SW)),
+    [YU_I3MV] = COMBO(yu_combo, OSL(_I3MV)),
 
     [PERDAS_ODIA] = COMBO(perdas_combo, SE_ODIA),
     [PERDAS_ADIA] = COMBO(perdas0_combo, SE_ADIA),
@@ -229,6 +237,30 @@ combo_t key_combos[COMBO_COUNT] = {
 #define CTL_LFT RCTL(KC_LEFT)
 #define CTL_RGT RCTL(KC_RGHT)
 
+// define i3 swap
+#define SW_1 LALT_T(KC_1)
+#define SW_2 LALT_T(KC_2)
+#define SW_3 LALT_T(KC_3)
+#define SW_4 LALT_T(KC_4)
+#define SW_5 LALT_T(KC_5)
+#define SW_6 LALT_T(KC_6)
+#define SW_7 LALT_T(KC_7)
+#define SW_8 LALT_T(KC_8)
+#define SW_9 LALT_T(KC_9)
+#define SW_0 LALT_T(KC_0)
+
+// define i3 swap
+#define MV_1 LSFT_T(LALT_T(KC_1))
+#define MV_2 LSFT_T(LALT_T(KC_2))
+#define MV_3 LSFT_T(LALT_T(KC_3))
+#define MV_4 LSFT_T(LALT_T(KC_4))
+#define MV_5 LSFT_T(LALT_T(KC_5))
+#define MV_6 LSFT_T(LALT_T(KC_6))
+#define MV_7 LSFT_T(LALT_T(KC_7))
+#define MV_8 LSFT_T(LALT_T(KC_8))
+#define MV_9 LSFT_T(LALT_T(KC_9))
+#define MV_0 LSFT_T(LALT_T(KC_0))
+
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_QWE] = LAYOUT(
@@ -251,6 +283,18 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_OSL] = LAYOUT(
     KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    /**/ KC_6,    KC_7,    KC_8,    KC_9,     KC_0,
+  	KC_TRNS, KC_TRNS ,KC_TRNS, KC_TRNS, KC_TRNS, /**/ KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
+  	KC_TRNS, KC_TRNS ,KC_TRNS, KC_TRNS, KC_TRNS, /**/ KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
+  							   KC_TRNS, KC_TRNS, /**/ KC_TRNS, KC_TRNS),
+
+  [_I3SW] = LAYOUT(
+    SW_1,    SW_2,    SW_3,    SW_4,    SW_5,    /**/ SW_6,    SW_7,    SW_8,    SW_9,     SW_0,
+  	KC_TRNS, KC_TRNS ,KC_TRNS, KC_TRNS, KC_TRNS, /**/ KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
+  	KC_TRNS, KC_TRNS ,KC_TRNS, KC_TRNS, KC_TRNS, /**/ KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
+  							   KC_TRNS, KC_TRNS, /**/ KC_TRNS, KC_TRNS),
+
+  [_I3MV] = LAYOUT(
+    MV_1,    MV_2,    MV_3,    MV_4,    MV_5,    /**/ MV_6,    MV_7,    MV_8,    MV_9,     MV_0,
   	KC_TRNS, KC_TRNS ,KC_TRNS, KC_TRNS, KC_TRNS, /**/ KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
   	KC_TRNS, KC_TRNS ,KC_TRNS, KC_TRNS, KC_TRNS, /**/ KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
   							   KC_TRNS, KC_TRNS, /**/ KC_TRNS, KC_TRNS),
