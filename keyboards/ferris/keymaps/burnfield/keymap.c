@@ -17,6 +17,9 @@ enum custom_keycodes {
   MT_MINS,
   MT_RPRN,
   MT_SCLN,
+  SE_GRV,
+  MT_CIRC,
+  MT_TILD,
 };
 
 #define HM_EXLM LGUI_T(MT_EXLM)
@@ -39,9 +42,6 @@ uint8_t NUM_CUSTOM_SHIFT_KEYS =
     sizeof(custom_shift_keys) / sizeof(custom_shift_key_t);
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-  if (!process_custom_shift_keys(keycode, record)) {
-    return false;
-  }
   switch (keycode) {
   case HM_EQL:
     if (record->tap.count > 0) {
@@ -50,7 +50,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }
       return false;
     }
-    break;
   case HM_UNDS:
     if (record->tap.count > 0) {
       if (record->event.pressed) {
@@ -58,7 +57,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }
       return false;
     }
-    break;
   case HM_MINS:
     if (record->tap.count > 0) {
       if (record->event.pressed) {
@@ -66,7 +64,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }
       return false;
     }
-    break;
   case HM_RPRN:
     if (record->tap.count > 0) {
       if (record->event.pressed) {
@@ -74,7 +71,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }
       return false;
     }
-    break;
   case HM_EXLM:
     if (record->tap.count > 0) {
       if (record->event.pressed) {
@@ -82,7 +78,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }
       return false;
     }
-    break;
   case HM_BSLS:
     if (record->tap.count > 0) {
       if (record->event.pressed) {
@@ -90,7 +85,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }
       return false;
     }
-    break;
   case HM_PIPE:
     if (record->tap.count > 0) {
       if (record->event.pressed) {
@@ -98,7 +92,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }
       return false;
     }
-    break;
   case HM_QUOT:
     if (record->tap.count > 0) {
       if (record->event.pressed) {
@@ -113,8 +106,30 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }
       return false;
     }
-    break;
-    break;
+  case SE_GRV:
+    if (record->event.pressed) {
+      tap_code16(KC_PLUS);
+      tap_code16(KC_PLUS);
+      tap_code16(KC_BSPC);
+    }
+    return false;
+  case MT_TILD:
+    if (record->event.pressed) {
+      tap_code16(SE_TILD);
+      tap_code16(SE_TILD);
+      tap_code16(KC_BSPC);
+    }
+    return false;
+  case MT_CIRC:
+    if (record->event.pressed) {
+      tap_code16(SE_CIRC);
+      tap_code16(SE_CIRC);
+      tap_code16(KC_BSPC);
+    }
+    return false;
+  }
+  if (!process_custom_shift_keys(keycode, record)) {
+    return false;
   }
   return true;
 };
@@ -197,12 +212,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     SE_Q,    SE_W,    SE_E,    SE_R,    SE_T,    /**/ SE_Y,    SE_U,    SE_I,    SE_O,    SE_P,
     SE_GUIA, SE_S,    SE_D,    SE_F,    SE_G,    /**/ SE_H,    SE_J,    SE_K,    SE_L,    HM_SCLN,
     SE_Z,    SE_ALTX, SE_SFTC, SE_CTLV, SE_B,    /**/ SE_N,    SE_CTLM, SE_SFTM, SE_ALTD, SE_SLSH,
-  						       KC_SPC,  MO(NAV), /**/ MO(SYM), KC_BSPC),
+  						       KC_SPC,  NAV,     /**/ SYM,     KC_BSPC),
 
   [_SYM] = LAYOUT(
     KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    /**/ KC_6,    KC_7,    KC_8,    KC_9,     KC_0,
-    HM_EXLM, SE_AT,   SE_HASH, SE_DLR,  SE_PERC, /**/ SE_CIRC, SE_AMPR, SE_ASTR, SE_LPRN,  HM_RPRN,
-    KC_PLUS, HM_BSLS, HM_PIPE, HM_QUOT, S(SE_2), /**/ SE_PLUS, HM_EQL,  HM_UNDS, HM_MINS,  SE_TILD,
+    HM_EXLM, SE_AT,   SE_HASH, SE_DLR,  SE_PERC, /**/ MT_CIRC, SE_AMPR, SE_ASTR, SE_LPRN,  HM_RPRN,
+    SE_GRV,  HM_BSLS, HM_PIPE, HM_QUOT, S(SE_2), /**/ SE_PLUS, HM_EQL,  HM_UNDS, HM_MINS,  MT_TILD,
                                _______, _______, /**/ _______, _______),
 
   [_NAV] = LAYOUT(
