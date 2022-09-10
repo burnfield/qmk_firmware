@@ -137,16 +137,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       set_oneshot_layer(_OSL, ONESHOT_START);
     }
     return false;
-  case KC_1:
-  case KC_2:
-  case KC_3:
-  case KC_4:
-  case KC_5:
-  case KC_6:
-  case KC_7:
-  case KC_8:
-  case KC_9:
-  case KC_0:
+  case KC_1 ... KC_0:
     if (record->event.pressed) {
       tap_code16(keycode);
       clear_oneshot_layer_state(ONESHOT_PRESSED);
