@@ -112,7 +112,6 @@
 #define SE_RPRN S(SE_9)    // )
 #define SE_EQL  S(SE_0)    // =
 #define SE_QUES S(SE_PLUS) // ?
-#define SE_GRV  S(SE_ACUT) // ` (dead)
 // Row 2
 #define SE_CIRC S(SE_DIAE) // ^ (dead)
 // Row 3
