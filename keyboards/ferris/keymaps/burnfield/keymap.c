@@ -24,10 +24,6 @@ enum custom_keycodes {
   MT_CIRC,
   MT_TILD,
   MT_TMUX,
-  SE_CPSW,
-  SE_ENT,
-  SE_ESC,
-  SE_SPC,
 };
 
 #define HM_EXLM LGUI_T(MT_EXLM)
@@ -48,26 +44,6 @@ const custom_shift_key_t custom_shift_keys[] = {
 };
 uint8_t NUM_CUSTOM_SHIFT_KEYS =
     sizeof(custom_shift_keys) / sizeof(custom_shift_key_t);
-
-// Left side
-#define SE_GUIA LGUI_T(SE_A)
-#define SE_ALTX LALT_T(SE_X)
-#define SE_SFTC LSFT_T(SE_C)
-#define SE_CTLV LCTL_T(SE_V)
-
-#define LGUI_F5 LGUI_T(KC_F5)
-#define LALT_F2 LALT_T(KC_F2)
-#define LSFT_F3 LSFT_T(KC_F3)
-#define LCTL_F4 LCTL_T(KC_F4)
-
-// Right side qwerty
-#define SE_ALTD LALT_T(SE_DOT)
-#define SE_SFTM RSFT_T(SE_COMM)
-#define SE_CTLM RCTL_T(SE_M)
-#define CTL_LFT RCTL(KC_LEFT)
-#define CTL_RGT RCTL(KC_RGHT)
-
-bool caps_word = false;
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
@@ -167,92 +143,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       clear_oneshot_layer_state(ONESHOT_PRESSED);
     }
     return false;
-  case SE_A ... SE_Z:
-    if (record->event.pressed) {
-      if (caps_word) {
-        tap_code16(LSFT(keycode));
-      } else {
-        tap_code16(keycode);
-      }
-    }
-    return false;
-  case SE_ENT:
-    if (record->event.pressed) {
-      if (caps_word) {
-        caps_word = false;
-      } else {
-        tap_code16(KC_ENT);
-      }
-    }
-    return false;
-  case SE_SPC:
-    if (record->event.pressed) {
-      if (caps_word) {
-        tap_code16(SE_UNDS);
-      } else {
-        tap_code16(KC_SPC);
-      }
-    }
-    return false;
-  case SE_ESC:
-    if (record->event.pressed) {
-      if (caps_word) {
-        caps_word = false;
-      } else {
-        tap_code16(KC_ESC);
-      }
-    }
-    return false;
-  case SE_CPSW:
-    if (record->event.pressed) {
-      caps_word = !caps_word;
-    }
-    return false;
-  case SE_GUIA:
-    if (record->event.pressed) {
-      if (caps_word) {
-        tap_code16(RSFT(SE_A));
-      } else {
-        tap_code16(keycode);
-      }
-    }
-    return false;
-  case SE_ALTX:
-    if (record->event.pressed) {
-      if (caps_word) {
-        tap_code16(RSFT(SE_X));
-      } else {
-        tap_code16(keycode);
-      }
-    }
-    return false;
-  case SE_SFTC:
-    if (record->event.pressed) {
-      if (caps_word) {
-        tap_code16(RSFT(SE_C));
-      } else {
-        tap_code16(keycode);
-      }
-    }
-    return false;
-  case SE_CTLV:
-    if (record->event.pressed) {
-      if (caps_word) {
-        tap_code16(RSFT(SE_V));
-      } else {
-        tap_code16(keycode);
-      }
-    }
-    return false;
-  case SE_CTLM:
-    if (record->event.pressed) {
-      if (caps_word) {
-        tap_code16(RSFT(SE_M));
-      } else {
-        tap_code16(keycode);
-      }
-    }
-    return false;
   }
   if (!process_custom_shift_keys(keycode, record)) {
     return false;
@@ -274,7 +164,6 @@ enum combos {
   PERDAS_ARNG,
   COMPER_CRBR,
   MCOM_RBRC,
-  CAP_WORD,
 };
 const uint16_t PROGMEM we_combo[] = {SE_W, SE_E, COMBO_END};
 const uint16_t PROGMEM sd_combo[] = {SE_S, SE_D, COMBO_END};
@@ -286,7 +175,6 @@ const uint16_t PROGMEM io_combo[] = {SE_I, SE_O, COMBO_END};
 const uint16_t PROGMEM ui_combo[] = {SE_U, SE_I, COMBO_END};
 const uint16_t PROGMEM yu_combo[] = {SE_Y, SE_U, COMBO_END};
 const uint16_t PROGMEM kl_combo[] = {SE_K, SE_L, COMBO_END};
-const uint16_t PROGMEM capsword_combo[] = {SE_SPC, KC_BSPC, COMBO_END};
 
 const uint16_t PROGMEM perdas_combo[] = {SE_SLSH, LALT_T(SE_DOT), COMBO_END};
 const uint16_t PROGMEM perdas0_combo[] = {SE_L, HM_SCLN, COMBO_END};
@@ -298,18 +186,16 @@ const uint16_t PROGMEM mcom_combo[] = {RSFT_T(SE_COMM), RCTL_T(SE_M),
                                        COMBO_END};
 
 combo_t key_combos[COMBO_COUNT] = {
-    [WE_ESC] = COMBO(we_combo, SE_ESC),
+    [WE_ESC] = COMBO(we_combo, KC_ESC),
     [SD_TAB] = COMBO(sd_combo, KC_TAB),
 
     [XC_CLBR] = COMBO(xc_combo, SE_LBRC),
     [CV_LPRN] = COMBO(cv_combo, SE_LCBR),
 
-    [KL_ENT] = COMBO(kl_combo, SE_ENT),
+    [KL_ENT] = COMBO(kl_combo, KC_ENT),
     [IO_TMUX] = COMBO(io_combo, MT_TMUX),
     [UI_I3SW] = COMBO(ui_combo, OSL(_I3SW)),
     [YU_I3MV] = COMBO(yu_combo, OSL(_I3MV)),
-
-    [CAP_WORD] = COMBO(capsword_combo, SE_CPSW),
 
     [PERDAS_ODIA] = COMBO(perdas_combo, SE_ODIA),
     [PERDAS_ADIA] = COMBO(perdas0_combo, SE_ADIA),
@@ -323,6 +209,24 @@ combo_t key_combos[COMBO_COUNT] = {
 #define QWE DF(_QWE)
 #define SYM MO(_SYM)
 #define NAV MO(_NAV)
+
+// Left side
+#define SE_GUIA LGUI_T(SE_A)
+#define SE_ALTX LALT_T(SE_X)
+#define SE_SFTC LSFT_T(SE_C)
+#define SE_CTLV LCTL_T(SE_V)
+
+#define LGUI_F5 LGUI_T(KC_F5)
+#define LALT_F2 LALT_T(KC_F2)
+#define LSFT_F3 LSFT_T(KC_F3)
+#define LCTL_F4 LCTL_T(KC_F4)
+
+// Right side qwerty
+#define SE_ALTD LALT_T(SE_DOT)
+#define SE_SFTM RSFT_T(SE_COMM)
+#define SE_CTLM RCTL_T(SE_M)
+#define CTL_LFT RCTL(KC_LEFT)
+#define CTL_RGT RCTL(KC_RGHT)
 
 // define i3 swap
 #define SW_1 LALT_T(KC_1)
@@ -354,7 +258,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     SE_Q,    SE_W,    SE_E,    SE_R,    SE_T,    /**/ SE_Y,    SE_U,    SE_I,    SE_O,    SE_P,
     SE_GUIA, SE_S,    SE_D,    SE_F,    SE_G,    /**/ SE_H,    SE_J,    SE_K,    SE_L,    HM_SCLN,
     SE_Z,    SE_ALTX, SE_SFTC, SE_CTLV, SE_B,    /**/ SE_N,    SE_CTLM, SE_SFTM, SE_ALTD, SE_SLSH,
-  						       SE_SPC,  NAV,     /**/ SYM,     KC_BSPC),
+  						       KC_SPC,  NAV,     /**/ SYM,     KC_BSPC),
 
   [_SYM] = LAYOUT(
     KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    /**/ KC_6,    KC_7,    KC_8,    KC_9,     KC_0,
