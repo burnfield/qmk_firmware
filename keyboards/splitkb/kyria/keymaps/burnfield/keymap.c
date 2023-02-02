@@ -3,8 +3,7 @@ enum layers {
   _QWE = 0,
   _NAV,
   _FN,
-  _SYM0,
-  _SYM1,
+  _SYM,
   _OSL,
   _I3SW,
   _I3MV,
@@ -39,11 +38,21 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 #define KC_SFTD LSFT_T(KC_D)
 #define KC_CTLF RCTL_T(KC_F)
 
+#define HM_EXLM KC_EXLM
+#define HM_AT KC_AT
+#define HM_HASH KC_HASH
+#define HM_DLR KC_DLR
+
 // Right side qwerty
 #define KC_ALTL LALT_T(KC_L)
 #define KC_SFTK RSFT_T(KC_K)
 #define KC_CTLJ RCTL_T(KC_J)
 #define KC_GUISCLN LGUI_T(KC_SCLN)
+
+#define HM_LPRN KC_LPRN
+#define HM_ASTR KC_ASTR
+#define HM_AMPR KC_AMPR
+#define HM_RPRN KC_RPRN
 
 enum combos {
   Q_W_ESC,
@@ -90,9 +99,8 @@ combo_t key_combos[COMBO_COUNT] = {
 
 // Aliases for readability
 #define QWE DF(_QWE)
-#define SYM0 MO(_SYM0)
-#define SYM1 MO(_SYM1)
-#define SPC_MV LT(_NAV, KC_SPC)
+#define SYM MO(_SYM)
+#define NAV MO(_NAV)
 #define BSPC_FN LT(_FN, KC_BSPC)
 
 // define i3 swap
@@ -125,25 +133,19 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     _______, KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                      /**/                   KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,       _______,
     _______, KC_GUIA, KC_ALTS, KC_SFTD, KC_CTLF, KC_G,                      /**/                   KC_H,    KC_CTLJ, KC_SFTK, KC_ALTL, KC_GUISCLN, _______,
     _______, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    _______, _______, /**/ _______, _______, KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH,    _______,
-  		                       _______, _______, SPC_MV,  SYM1,    _______, /**/ _______, SYM0,    BSPC_FN, _______, _______),
+  		                       _______, _______, KC_SPC,  NAV,     _______, /**/ _______, SYM,     KC_BSPC, _______, _______),
 
-  [_SYM0] = LAYOUT(
-    _______, KC_1,    KC_2,    KC_3,    KC_4,       KC_5,                      /**/                   KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,  KC_TRNS, _______,
-    _______, KC_EXLM, KC_AT,   KC_HASH, KC_DLR,     KC_PERC,                   /**/                   KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,  KC_TRNS, _______,
-    _______, KC_MINS, KC_UNDS, KC_QUOT, S(KC_QUOT), KC_BSLS, _______, _______, /**/ _______, _______, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,  KC_TRNS, _______,
-                                  _______, _______, _______, KC_TRNS, _______, /**/ _______, _______, _______, _______, _______),
-
-  [_SYM1] = LAYOUT(
-  	_______, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,  KC_TRNS,                   /**/                   KC_6,    KC_7,    KC_8,    KC_9,     KC_0,    _______,
-  	_______, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,  KC_TRNS,                   /**/                   KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN,  KC_RPRN, _______,
-  	_______, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,  KC_TRNS, _______, _______, /**/ _______, _______, KC_PIPE, KC_PLUS,  KC_EQL, KC_GRV,  KC_TILD,  _______,
-  		                        _______, _______, _______, _______, _______, /**/ _______, KC_TRNS, KC_DEL,  _______, _______),
+  [_SYM] = LAYOUT(
+    _______, KC_1,    KC_2,    KC_3,    KC_4,       KC_5,                      /**/                   KC_6,    KC_7,    KC_8,    KC_9,     KC_0,    _______,
+    _______, HM_EXLM, HM_AT,   HM_HASH, HM_DLR,     KC_PERC,                   /**/                   KC_CIRC, HM_AMPR, HM_ASTR, HM_LPRN,  HM_RPRN, _______,
+    _______, KC_MINS, KC_UNDS, KC_QUOT, S(KC_QUOT), KC_BSLS, _______, _______, /**/ _______, _______, KC_PIPE, KC_PLUS,  KC_EQL, KC_GRV,  KC_TILD,  _______,
+                                  _______, _______, _______, KC_TRNS, _______, /**/ _______, KC_TRNS, _______, _______, _______),
 
   [_NAV] = LAYOUT(
     _______, KC_TRNS, KC_TRNS ,KC_TRNS, KC_TRNS, KC_TRNS,                   /**/                   KC_HOME, KC_PGDN, KC_PGUP, KC_END,  KC_TRNS, _______,
   	_______, KC_TRNS, KC_TRNS ,KC_TRNS, KC_TRNS, KC_TRNS,                   /**/                   KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, KC_TRNS, _______,
   	_______, KC_TRNS, KC_TRNS ,KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, /**/ KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, _______,
-  							   KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, /**/ KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS),
+  							   KC_TRNS, KC_TRNS, MO(_FN), KC_TRNS, KC_TRNS, /**/ KC_TRNS, KC_TRNS, KC_DEL,  KC_TRNS, KC_TRNS),
   [_FN] = LAYOUT(
     _______, KC_F1,  KC_F2,  KC_F3,   KC_F4,   KC_F5,                     /**/                   KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,  KC_TRNS, _______,
   	_______, KC_F6,  KC_F7,  KC_F8,   KC_F9,   KC_F10,                    /**/                   KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,  KC_TRNS, _______,
