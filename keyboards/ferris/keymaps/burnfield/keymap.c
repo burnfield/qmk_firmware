@@ -34,55 +34,53 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 };
 
 // Left side
-#define KC_GUIA LGUI_T(KC_A)
-#define KC_ALTS LALT_T(KC_S)
-#define KC_SFTD LSFT_T(KC_D)
-#define KC_CTLF RCTL_T(KC_F)
+#define KC_GUIZ LGUI_T(KC_Z)
+#define KC_ALTX LALT_T(KC_X)
+#define KC_SSPC LSFT_T(KC_SPC)
+#define KC_CBSP LCTL_T(KC_BSPC)
 
 // Right side qwerty
-#define KC_ALTL LALT_T(KC_L)
-#define KC_SFTK RSFT_T(KC_K)
-#define KC_CTLJ RCTL_T(KC_J)
-#define KC_GUISCLN LGUI_T(KC_SCLN)
+#define KC_ADOT LALT_T(KC_DOT)
+#define KC_GSLSH LGUI_T(KC_SLSH)
 
 enum combos {
   Q_W_ESC,
-  S_D_TAB,
+  W_E_TAB,
   X_C_LBRC,
   C_V_LCBR,
-  K_L_ENT,
-  I_O_TMUX,
-  U_I_I3SW,
-  Y_U_I3MV,
+  I_O_ENT,
+  U_I_TMUX,
+  E_R_I3SW,
+  R_T_I3MV,
   COMM_DOT_RBRC,
   M_COMM_RCBR,
 };
 
+const uint16_t PROGMEM q_w_combo[] = {KC_Q, KC_W, COMBO_END};
 const uint16_t PROGMEM w_e_combo[] = {KC_W, KC_E, COMBO_END};
-const uint16_t PROGMEM s_d_combo[] = {KC_ALTS, KC_SFTD, COMBO_END};
 
-const uint16_t PROGMEM x_c_combo[] = {KC_X, KC_C, COMBO_END};
+const uint16_t PROGMEM x_c_combo[] = {KC_ALTX, KC_C, COMBO_END};
 const uint16_t PROGMEM c_v_combo[] = {KC_C, KC_V, COMBO_END};
 
 const uint16_t PROGMEM i_o_combo[] = {KC_I, KC_O, COMBO_END};
 const uint16_t PROGMEM u_i_combo[] = {KC_U, KC_I, COMBO_END};
-const uint16_t PROGMEM y_u_combo[] = {KC_Y, KC_U, COMBO_END};
-const uint16_t PROGMEM k_l_combo[] = {KC_SFTK, KC_ALTL, COMBO_END};
+const uint16_t PROGMEM e_r_combo[] = {KC_E, KC_R, COMBO_END};
+const uint16_t PROGMEM r_t_combo[] = {KC_R, KC_T, COMBO_END};
 
-const uint16_t PROGMEM comm_dot_combo[] = {KC_DOT, KC_COMM, COMBO_END};
+const uint16_t PROGMEM comm_dot_combo[] = {KC_ADOT, KC_COMM, COMBO_END};
 const uint16_t PROGMEM m_comm_combo[] = {KC_COMM, KC_M, COMBO_END};
 
 combo_t key_combos[COMBO_COUNT] = {
-    [Q_W_ESC] = COMBO(w_e_combo, KC_ESC),
-    [S_D_TAB] = COMBO(s_d_combo, KC_TAB),
+    [Q_W_ESC] = COMBO(q_w_combo, KC_ESC),
+    [W_E_TAB] = COMBO(w_e_combo, KC_TAB),
 
     [X_C_LBRC] = COMBO(x_c_combo, KC_LBRC),
     [C_V_LCBR] = COMBO(c_v_combo, KC_LCBR),
 
-    [K_L_ENT] = COMBO(k_l_combo, KC_ENT),
-    [I_O_TMUX] = COMBO(i_o_combo, MT_TMUX),
-    [U_I_I3SW] = COMBO(u_i_combo, OSL(_I3SW)),
-    [Y_U_I3MV] = COMBO(y_u_combo, OSL(_I3MV)),
+    [I_O_ENT] = COMBO(i_o_combo, KC_ENT),
+    [U_I_TMUX] = COMBO(u_i_combo, MT_TMUX),
+    [E_R_I3SW] = COMBO(e_r_combo, OSL(_I3SW)),
+    [R_T_I3MV] = COMBO(r_t_combo, OSL(_I3MV)),
 
     [COMM_DOT_RBRC] = COMBO(comm_dot_combo, KC_RBRC),
     [M_COMM_RCBR] = COMBO(m_comm_combo, KC_RCBR),
@@ -121,9 +119,9 @@ combo_t key_combos[COMBO_COUNT] = {
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_QWE] = LAYOUT(
     KC_Q,    KC_W,    KC_E,    KC_R,    KC_T, /**/ KC_Y, KC_U,    KC_I,    KC_O,    KC_P,
-    KC_GUIA, KC_ALTS, KC_SFTD, KC_CTLF, KC_G, /**/ KC_H, KC_CTLJ, KC_SFTK, KC_ALTL, KC_GUISCLN,
-    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B, /**/ KC_N, KC_M,    KC_COMM, KC_DOT,  KC_SLSH,
-                               KC_SPC,  NAV,  /**/ SYM,  KC_BSPC),
+    KC_A,    KC_S,    KC_D,    KC_F,    KC_G, /**/ KC_H, KC_J,    KC_K,    KC_L,    KC_SCLN,
+    KC_GUIZ, KC_ALTX, KC_C,    KC_V,    KC_B, /**/ KC_N, KC_M,    KC_COMM, KC_ADOT, KC_GSLSH,
+                               KC_SSPC, NAV,  /**/ SYM,  KC_CBSP),
 
   [_SYM] = LAYOUT(
     KC_1,    KC_2,    KC_3,    KC_4,       KC_5,    /**/ KC_6,    KC_7,    KC_8,    KC_9,     KC_0,
