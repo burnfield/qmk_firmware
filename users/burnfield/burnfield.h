@@ -51,7 +51,7 @@ enum keycodes {
 
 #define _______________NAV_L1___________________ KC_1, KC_2, KC_3, KC_4, KC_5
 #define _______________NAV_L2___________________ OS_GUI, OS_ALT, OS_SHFT, OS_CTRL, KC_DEL
-#define _______________NAV_L3___________________ TG(_QWE), _______, _______, RCTL(KC_Q), RCTL(KC_W)
+#define _______________NAV_L3___________________ TG(_QWE), _______, RCTL(KC_W), RCTL(KC_Q), CW_TOGG
 
 #define _______________NAV_R1___________________ KC_6, KC_7, KC_8, KC_9, KC_0
 #define _______________NAV_R2___________________ KC_LEFT, KC_DOWN, KC_UP, KC_RGHT, KC_ENT
