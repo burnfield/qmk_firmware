@@ -4,8 +4,8 @@
 #define LAYOUT_wrapper(...) LAYOUT(__VA_ARGS__)
 
 enum layers {
-  _QWE = 0,
-  _COLE,
+  _COLE = 0,
+  _QWE,
   _SYM,
   _NAV,
   _FN,
